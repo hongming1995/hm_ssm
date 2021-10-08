@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
+         version="3.0">
+  <display-name>Archetype Created Web Application</display-name>
+
+  <!--加载spring-mybatis.xml配置文件-->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath:spring-mybatis.xml</param-value>
+  </context-param>
+
+  <!--配置监听器-->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+
+  <!--配置过滤器，需要所有路径编码格式为UTF-8-->
+  <filter>
+    <filter-name>characterEncodingFilter</filter-name>
+    <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+    <!--启用异步支持-->
+    <async-supported>true</async-supported>
+    <init-param>
+      <param-name>encode</param-name>
+      <param-value>UTF-8</param-value>
+    </init-param>
+  </filter>
+
+  <!--配置拦截器需要拦截的路径-->
+  <filter-mapping>
+    <filter-name>characterEncodingFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!--配置前端控制器-->
+  <servlet>
+    <servlet-name>springMVC</servlet-name>
+    <!--前端控制器的类-->
+    <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+    <!--配置加载springmvc的配置文件-->
+    <init-param>
+      <param-name>contextConfigLocation</param-name>
+      <param-value>classpath:spring-mvc.xml</param-value>
+    </init-param>
+    <!--
+    1.如果值是负数或者没有设置，那么当前的servlet只有在被调用时才会触发init方法
+    2.而我们的前端控制器和springmvc配置文件需要项目启动时加载，那么设置成正整数
+    3.当值是大于等于0的时候，才会项目启动就会加载。值越小，则加载循序越靠前。所以设置成1
+    -->
+    <load-on-startup>1</load-on-startup>
+    <async-supported>true</async-supported>
+  </servlet>
+  
+  <servlet-mapping>
+    <servlet-name>springMVC</servlet-name>
+    <url-pattern>/*</url-pattern>
+  </servlet-mapping>
+
+  <!--会话超时:120秒-->
+  <session-config>
+    <session-timeout>120</session-timeout>
+  </session-config>
+
+  <!--登录首先会进入的页面-->
+  <welcome-file-list>
+    <welcome-file>/index.jsp</welcome-file>
+    <!--<welcome-file>/index.html</welcome-file>-->
+  </welcome-file-list>
+
+  <!--项目访问出现404会进入的页面设置-->
+  <error-page>
+    <error-code>404</error-code>
+    <location>/html/error.html</location>
+  </error-page>
+</web-app>

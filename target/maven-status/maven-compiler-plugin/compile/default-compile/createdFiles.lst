@@ -1,0 +1,3 @@
+com\hex\hm\controller\UserController.class
+com\hex\hm\model\User.class
+com\hex\hm\dao\userMapper.class
